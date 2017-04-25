@@ -1,0 +1,48 @@
+{
+  "presets": ["react", "es2015", "stage-0"],
+  "plugins": [
+    ["transform-class-properties"],
+    ["transform-object-rest-spread"],
+    ["transform-export-extensions"],
+    ["add-module-exports"],
+    ["oxygen-i18n", {
+      "statsFile": "build/stats.json",
+      "bundleFile": "build/messages.json"
+    }]
+  ],
+  "env": {
+    "production": {
+      "plugins": [
+        ["oxygen-css", {
+          "vendorPrefixes": true,
+          "prefix": "cs_",
+          "compressClassNames": true,
+          "bundleFile": "build/bundle.css",
+          "context": "./src/styles/index.js",
+          "mediaMap": {
+            "phone": "media only screen and (max-width: 767px)",
+            "tablet": "media only screen and (min-width: 768px) and (max-width: 959px)",
+            "desktop": "media only screen and (min-width: 960px)"
+          }
+        }]
+      ]
+    },
+    "development": {
+      "plugins": [
+        ["oxygen-css", {
+          "vendorPrefixes": true,
+          "prefix": "cs_",
+          "compressClassNames": false,
+          "bundleFile": "build/bundle.css",
+          "context": "./src/styles/index.js",
+          "mediaMap": {
+            "phone": "media only screen and (max-width: 767px)",
+            "tablet": "media only screen and (min-width: 768px) and (max-width: 959px)",
+            "desktop": "media only screen and (min-width: 960px)"
+          }
+        }]
+      ]
+    }
+  }
+
+}
