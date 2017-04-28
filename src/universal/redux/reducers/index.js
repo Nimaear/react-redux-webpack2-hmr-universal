@@ -1,1 +1,2 @@
-export {default as store} from 'universal/modules/store/redux/store.js';
+export { default as entities } from './entities';
+export { default as auth } from './auth';

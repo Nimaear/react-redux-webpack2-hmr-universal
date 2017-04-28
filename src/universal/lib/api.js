@@ -7,6 +7,7 @@ const API_URL = `${protocol}://${host}/${route}`;
 
 class API {
   constructor() {
+    this.session = null;
     this.axios = axios.create({
       baseURL: API_URL,
       timeout: 3000,
@@ -18,21 +19,57 @@ class API {
     this.post = this.createMethod('post');
   }
 
+  setSession(session) {
+    this.session = session;
+  }
+
+  setToken(token) {
+    this.axios.defaults.headers.common['Token'] = token;
+    if (this.session) {
+      this.session.token = token;
+    }
+  }
+
+  status(url, data) {
+    return new Promise((resolve, reject) => {
+      this.axios.post(url, data).then( res => {
+        const { data } = res;
+        this.setToken(data.data.sessionId);
+        resolve(data);
+      })
+      .catch(res => {
+        reject({
+          res
+        });
+      });
+    });
+  }
+
+  auth(url, data) {
+    return new Promise((resolve, reject) => {
+      this.axios.post(url, data).then( res => {
+        const { data } = res;
+        this.setToken(data.data.sessionId);
+        resolve(data);
+      })
+      .catch(res => {
+        reject({
+          res
+        });
+      });
+    });
+  }
+
   createMethod(method) {
     return (url, data) => {
       return new Promise((resolve, reject) => {
         this.axios[method](url, data).then( res => {
-          const { response } = response;
-          resolve({
-            error: false,
-            message: res.data && res.data.message,
-            response
-          });
+          const { data } = res;
+          resolve(data);
         })
         .catch(res => {
           reject({
-            error: res.data && res.data.error || true,
-            message: res.data && res.data.message,
+            res
           });
         });
       });

@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { ConnectedRouter } from 'react-router-redux';
-import {Route} from 'react-router';
-// Redux
-import { Provider } from 'react-redux';
+import { Route } from 'react-router';
 
 // Components
-import Routes from 'universal/routes/Routes.js';
+import Routes from 'universal/routes/Routes';
 
 class AppContainer extends Component {
   static propTypes = {

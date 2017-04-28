@@ -3,7 +3,7 @@ import {
   combineReducers,
   applyMiddleware
 } from 'redux';
-
+import { composeWithDevTools } from 'redux-devtools-extension';
 import {
   ConnectedRouter,
   routerReducer,
@@ -13,13 +13,13 @@ import {
 import apiMiddleware from '../../universal/lib/apiMiddleware';
 import * as Reducers from './reducers/index.js';
 
-export default (history) => {
+export default (history, initialState = {}) => {
   const middlewares = [ routerMiddleware(history), apiMiddleware];
 
   const store = createStore(combineReducers({
     ...Reducers,
     router: routerReducer
-  }), applyMiddleware(...middlewares));
+  }), initialState, composeWithDevTools(applyMiddleware(...middlewares)));
 
 
   if (module.hot) {

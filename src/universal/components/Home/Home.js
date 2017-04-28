@@ -10,6 +10,10 @@ addTranslations({
 })
 
 class Home extends Component {
+
+  static fetchData = [
+  ];
+
   render () {
     return (
       <div >

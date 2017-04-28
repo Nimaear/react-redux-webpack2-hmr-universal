@@ -2,15 +2,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 // Components
 import Store from 'universal/modules/store/components/Store/Store.js';
 
 // Actions
-// import {
-//   incrementCount,
-//   decrementCount
-// } from 'universal/modules/counter/redux/counter.js';
+import * as storeActions from 'universal/modules/store/redux/store.js';
 
 
 class StoreContainer extends Component {
@@ -23,8 +21,24 @@ class StoreContainer extends Component {
     // decrementCount: PropTypes.func.isRequired
   }
 
+  static fetchData = [
+    storeActions.fetch
+  ];
+
+  componentDidMount() {
+    const {
+      fetch,
+      match
+    } = this.props;
+    fetch(match.params);
+  }
+
   render () {
-    return (<Store {...this.props} />);
+    const {
+      fetch,
+      match
+    } = this.props;
+    return (<Store {...this.props} name={match.params.name} fetch={fetch}/>);
   }
 }
 
@@ -39,12 +53,8 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch, props) {
   return {
-    // incrementCount: () => {
-    //   dispatch(incrementCount());
-    // },
-    // decrementCount: () => {
-    //   dispatch(decrementCount());
-    // }
+    fetch: bindActionCreators(storeActions.fetch, dispatch),
+    clear: bindActionCreators(storeActions.clear, dispatch)
   };
 }
 

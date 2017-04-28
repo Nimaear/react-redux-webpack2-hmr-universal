@@ -12,7 +12,7 @@ const cssInclude = path.join(root, 'build');
 const clientInclude = [clientSrc, universalSrc];
 
 export default {
-  devtool: 'eval',
+  devtool: 'eval-source-map',
   context: src,
   entry: {
     app: [

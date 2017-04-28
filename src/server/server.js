@@ -2,6 +2,7 @@ import http    from 'http';
 import express from 'express';
 import colors  from 'colors';
 import path    from 'path';
+import session from 'express-session';
 
 // Server Side Rendering
 import {
@@ -12,6 +13,13 @@ import {
 const PROD = process.env.NODE_ENV === 'production';
 
 const app = express();
+
+app.use(session({
+  secret: 'All the cats in the world',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
 
 if (PROD) {
   app.use('/static', express.static('build'));

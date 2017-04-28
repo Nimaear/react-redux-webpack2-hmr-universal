@@ -1,14 +1,22 @@
 import api from './api';
+import { normalize } from 'normalizr';
 
 export default function apiMiddleware (store) {
 
   return next => action => {
-    const { apiCall, checkCache, type, ...rest } = action;
+    const { apiCall, type, ...rest } = action;
 
     if (!apiCall) return next(action);
-
+    const state = store.getState();
+    const {
+      data,
+      apiMethod,
+      method,
+      checkCache,
+      url
+    } = apiCall;
     if (checkCache) {
-      const cachedResponse = checkCache(store.getState());
+      const cachedResponse = checkCache(apiCall.data, state);
       if (cachedResponse) {
         return new Promise((resolve) => {
           resolve(cachedResponse);
@@ -23,25 +31,28 @@ export default function apiMiddleware (store) {
     }
 
     next({ ...rest, type: type + '/request' });
-    return apiCall(api)
+    return api[apiMethod || 'post'](url, {method, data: data || {}})
       .then(res => {
-        const { response, message } = res;
-        if (response.entities) {
-          next({ ...rest, ...response, type });
+        const { isError, data } = res;
+        if (apiCall.schema) {
+          const normalizedData = normalize(data, apiCall.schema)
+          next({ ...rest, entities: normalizedData.entities, type });
+          return {
+            error: false,
+            ...normalizedData
+          };
         } else {
-          next({ ...rest, response, type });
+          next({ ...rest, data, type });
+          return {
+            error: false,
+            ...data
+          };
         }
-        return {
-          error: false,
-          message,
-          response,
-        };
       })
       .catch(res => {
         next({ ...rest, res, type: type + '/fail' });
         return {
-          error: res.error || true,
-          message: res.message,
+          error: res.error || true
         }
       });
 

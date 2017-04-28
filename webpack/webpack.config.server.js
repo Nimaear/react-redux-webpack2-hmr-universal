@@ -23,7 +23,8 @@ export default {
     chunkFilename: '[name]_[chunkhash].js',
     filename: '[name].js',
     libraryTarget: 'commonjs2',
-    publicPath: '/static/'
+    publicPath: '/static/',
+    sourceMapFilename: '[name]_[chunkhash].js.map',
   },
   resolve: {
     extensions: ['.js'],

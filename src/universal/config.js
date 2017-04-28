@@ -5,7 +5,7 @@ const config = {
       protocol: 'https',
       version: 'v2',
       host: 't-api.s.coursio.com',
-      route: '/api'
+      route: 'api'
     },
   },
   test: {
@@ -14,7 +14,7 @@ const config = {
       protocol: 'https',
       version: 'v2',
       host: 't-api.s.coursio.com',
-      route: '/api'
+      route: 'api'
     },
   },
   acceptance: {
@@ -23,7 +23,7 @@ const config = {
       protocol: 'https',
       version: 'v2',
       host: 't-api.s.coursio.com',
-      route: '/api'
+      route: 'api'
     },
   },
   production: {
@@ -32,7 +32,7 @@ const config = {
       protocol: 'https',
       version: 'v2',
       host: 't-api.s.coursio.com',
-      route: '/api'
+      route: 'api'
     },
   },
 };

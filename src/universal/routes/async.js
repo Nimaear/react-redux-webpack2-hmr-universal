@@ -27,10 +27,19 @@ function asyncRoute(getComponent) {
   }
 }
 
-export const Home = asyncRoute(() => {
-  return System.import('../components/Home/Home.js');
-});
-
-export const Counter = asyncRoute(() => {
-  return System.import('../modules/counter/containers/Counter/CounterContainer.js');
-});
+export default [
+  {
+    path: '/',
+    exact: true,
+    component: asyncRoute(() => {
+      return System.import('../components/Home/Home.js');
+    })
+  },
+  {
+    path: '/store/:name',
+    component: asyncRoute(() => {
+      return System.import('../modules/store/containers/Store/StoreContainer.js');
+    }),
+    // childRoutes: storeRoutes
+  },
+];

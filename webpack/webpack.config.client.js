@@ -37,7 +37,8 @@ export default {
     filename: '[name]_[chunkhash].js',
     chunkFilename: '[name]_[chunkhash].js',
     path: build,
-    publicPath: '/static/'
+    publicPath: '/static/',
+    sourceMapFilename: '[name]_[chunkhash].js.map',
   },
   resolve: {
     extensions: ['.js'],

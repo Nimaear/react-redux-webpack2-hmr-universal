@@ -1,6 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import {AppContainer} from 'react-hot-loader';
+import api from 'universal/lib/api';
 
 // Components
 import App from './containers/AppContainer.js';
@@ -12,7 +13,12 @@ import createHistory from 'history/createBrowserHistory';
 
 
 const history = createHistory();
-const store = createStore(history);
+const initialState = window.__INITIAL_STATE__;
+const store = createStore(history, initialState);
+
+if (initialState.auth && initialState.auth.sessionId) {
+  api.setToken(initialState.auth.sessionId);
+}
 
 const rootEl = document.getElementById('root')
 const renderApp = (Component) => {

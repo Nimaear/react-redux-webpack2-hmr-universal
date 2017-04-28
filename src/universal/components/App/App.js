@@ -12,6 +12,8 @@ try {
 
 require('styles/reset.css');
 require('../../../../build/bundle.css');
+require('cio/dist/bundle.css');
+
 const css = oxygenCss({
   root: {
     position: 'relative',
