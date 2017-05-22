@@ -5,7 +5,7 @@ import AppPage from 'cio/lib/AppPage';
 import StoreCard from './StoreCard';
 import Cover from 'cio/lib/Cover';
 import { translate as _l } from 'oxygen-i18n';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 
 import { fontSize, hexToRgba, Units, Colors } from 'universal/styles';

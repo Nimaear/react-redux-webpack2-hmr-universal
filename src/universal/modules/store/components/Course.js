@@ -6,7 +6,7 @@ import StoreCard from './Store/StoreCard';
 import Cover from 'cio/lib/Cover';
 import { fontSize, hexToRgba, lineHeight, Units, Colors } from 'universal/styles';
 import { currency, translate as _l } from 'oxygen-i18n';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 import common from 'universal/styles/common';
 import StoreFooter from 'universal/modules/store/components/Store/StoreFooter';

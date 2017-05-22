@@ -20,7 +20,7 @@
     "code-splitting",
     "webpack"
   ],
-  "author": "Alexander J Ray <alexjamesray@gmail.com>",
+  "author": "Özgür Ayten",
   "license": "MIT",
   "devDependencies": {
     "assets-webpack-plugin": "^3.5.1",
@@ -57,12 +57,12 @@
     "oxygen-debounce": "^1.0.1",
     "oxygen-i18n": "^1.4.0",
     "react": "^15.4.2",
-    "react-addons-css-transition-group": "^15.5.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
     "react-router": "^4.0.0",
     "react-router-dom": "^4.0.0",
     "react-router-redux": "^5.0.0-alpha.4",
+    "react-transition-group": "^1.1.3",
     "redux": "^3.6.0",
     "redux-devtools-extension": "^2.13.0",
     "redux-thunk": "^2.2.0",
