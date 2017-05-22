@@ -5,34 +5,58 @@ import { store } from 'universal/schemas';
 const initialState = {
 };
 
-export const fetch = (data) => {
-  return {
-    type: 'store/read',
-    apiCall: {
-      checkCache: (params, state) => {
-        if (state.entities.store[params.name]) {
-          return state.entities.store[params.name];
-        }
+export const fetch = (data) => ({
+  type: 'store/read',
+  apiCall: {
+    checkCache: (params, state) => {
+      if (params.refetch) {
         return null;
-      },
-      schema: store,
-      data,
-      method: 'read',
-      url: 'store'
-    }
-  };
-}
+      }
+      if (state.entities.store[params.name]) {
+        return state.entities.store[params.name];
+      }
+      return null;
+    },
+    schema: store,
+    data,
+    method: 'read',
+    url: 'store'
+  }
+});
 
-export const clear = () => {
-  return {
-    type: 'store/clear',
-  };
-}
+export const setSearch = (name, search) => ({
+  type: 'store/setSearch',
+  name,
+  search
+});
 
+export const setFilter = (name, itemType) => ({
+  type: 'store/setFilter',
+  name,
+  itemType
+});
 
 export default createReducer(initialState, {
-  ['store/clear']: (state, action) => {
+  ['store/setSearch']:  (state, action) => {
+    const { name, search } = action;
     return {
+      ...state,
+      [name]: {
+        ...state[name],
+        search
+      }
+    }
+  },
+  ['store/setFilter']:  (state, action) => {
+    const { name, itemType } = action;
+    return {
+      ...state,
+      [name]: {
+        ...state[name],
+        filter: {
+          itemType
+        }
+      }
     }
   },
   default: (state, action) => {

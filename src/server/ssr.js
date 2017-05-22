@@ -6,6 +6,7 @@ import api from 'universal/lib/api';
 // Libraries
 import React from 'react';
 import {renderToString} from 'react-dom/server';
+import { addMessages } from 'oxygen-i18n';
 
 // Redux
 // import {push} from 'react-router-redux';
@@ -49,7 +50,7 @@ const fetchComponentData = (dispatch, routes, url) => {
 }
 
 
-function renderApp(req, res, store, assets) {
+function renderApp(req, res, store, assets, messages) {
   const context = {};
   const {
     url,
@@ -65,19 +66,33 @@ function renderApp(req, res, store, assets) {
   const promises = fetchComponentData(store.dispatch, routes, url);
 
   Promise.all(promises).then(data => {
+    const state = store.getState();
+    let title = 'Coursio';
+    if (state && state.entities && state.entities.store) {
+      const storeName = Object.keys(state.entities.store)[0];
+      const storeDetails = state.entities.store[storeName];
+      // console.log(storeDetails)
+      if (storeDetails && storeDetails.owner) {
+        title = storeDetails.owner.name;
+      }
+    }
     const html = renderToString(
       <Html
-        title='💥'
+        title={title}
         store={store}
         url={url}
+        messages={messages}
         context={context}
         assets={assets} />
     );
     // do something w/ the data so the client
     // can access it then render the app
     res.send('<!DOCTYPE html>'+html);
-  }).catch(res => {
-    res.send('<!DOCTYPE html>'+'error');
+  }, error => {
+    console.error(error);
+  }).catch(error => {
+    console.log(error)
+    res.send('<!DOCTYPE html>' + error);
   })
 }
 
@@ -91,7 +106,12 @@ export const renderPage = function (req, res) {
     join(__dirname, '..', '..', 'build', basename(assets.manifest.js)),
     'utf-8'
   );
-  renderApp(req, res, store, assets);
+  const messages = JSON.parse(fs.readFileSync(
+    join(__dirname, '..', '..', 'build', 'messages.json'),
+    'utf-8'
+  ));
+  addMessages(messages);
+  renderApp(req, res, store, assets, messages);
 };
 
 export const renderDevPage = function (req, res) {

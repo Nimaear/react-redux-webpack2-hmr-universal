@@ -15,7 +15,7 @@ const serverInclude = [server, universal];
 export default {
   context: src,
   entry: {
-    prerender: './universal/routes/Routes.js'
+    prerender: './universal/routes/Routes.js',
   },
   target: 'node',
   output: {
@@ -32,7 +32,7 @@ export default {
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
-    new ExtractTextPlugin('[name].css'),
+    new ExtractTextPlugin({filename: '[name].css', allChunks:true }),
     new webpack.optimize.UglifyJsPlugin({compressor: {warnings: false}}),
     new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}),
     new webpack.DefinePlugin({
@@ -60,14 +60,15 @@ export default {
       test: /\.jsx?$/,
       use: [ 'babel-loader', ],
       exclude: /node_modules/,
-      include: serverInclude
+      include: serverInclude,
+      // query: {compact: false}
     },
      // CSS
     {
       test: /\.css$/,
       loader: ExtractTextPlugin.extract({
         fallback: 'style-loader',
-        use: 'css-loader'
+        use: 'css-loader',
       })
     }]
   }

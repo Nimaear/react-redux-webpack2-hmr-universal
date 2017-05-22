@@ -7,12 +7,12 @@ let routes
 
 
 // This is used in production for code splitting via `wepback.config.server.js`
-//
 if (__PRODUCTION__) {
   routes = require('universal/routes/async');
 } else {
   routes = require('../routes/static');
 }
+
 
 // Containers
 import AppContainer from 'universal/containers/App/AppContainer';
@@ -26,7 +26,7 @@ class Routes extends Component {
     return (
       <AppContainer>
         <div>
-          {routes.map((route, index) => {
+          {(routes).map((route, index) => {
             return <Route key={index} {...route} />
           })}
         </div>

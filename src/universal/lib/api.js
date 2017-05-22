@@ -30,7 +30,7 @@ class API {
     }
   }
 
-  status(url, data) {
+  auth(url, data) {
     return new Promise((resolve, reject) => {
       this.axios.post(url, data).then( res => {
         const { data } = res;
@@ -45,12 +45,14 @@ class API {
     });
   }
 
-  auth(url, data) {
+  logout(url, data) {
     return new Promise((resolve, reject) => {
       this.axios.post(url, data).then( res => {
-        const { data } = res;
-        this.setToken(data.data.sessionId);
-        resolve(data);
+        this.axios.post('auth', { method: 'status'}).then( res => {
+          const { data } = res;
+          this.setToken(data.data.sessionId);
+          resolve(data);
+        })
       })
       .catch(res => {
         reject({

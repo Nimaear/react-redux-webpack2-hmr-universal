@@ -7,8 +7,8 @@
     "development": "NODE_PATH=./src NODE_ENV=development node ./src/server/server.babel.js",
     "production": "NODE_PATH=./src NODE_ENV=production node ./src/server/server.babel.js",
     "build": "npm run build:client && npm run build:server",
-    "build:server": "NODE_ENV=production webpack --config ./webpack/server.babel.js",
-    "build:client": "NODE_ENV=production webpack --config ./webpack/client.babel.js"
+    "build:server": "webpack --config ./webpack/server.babel.js",
+    "build:client": "webpack --config ./webpack/client.babel.js"
   },
   "keywords": [
     "react",
@@ -25,7 +25,6 @@
   "devDependencies": {
     "assets-webpack-plugin": "^3.5.1",
     "autoprefixer": "^6.7.7",
-    "cio": "git@github.com:Coursio/cio.git",
     "babel-loader": "^6.4.1",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -44,8 +43,10 @@
   },
   "dependencies": {
     "axios": "^0.16.1",
+    "babel-cli": "^6.24.1",
     "babel-plugin-oxygen-css": "^1.0.3",
     "babel-plugin-oxygen-i18n": "^1.0.4",
+    "cio": "ssh://github.com/Coursio/cio",
     "classnames": "^2.2.5",
     "colors": "^1.1.2",
     "express": "^4.15.2",
@@ -53,14 +54,18 @@
     "history": "^4.6.1",
     "json-loader": "^0.5.4",
     "normalizr": "^3.2.2",
-    "oxygen-i18n": "^1.3.3",
+    "oxygen-debounce": "^1.0.1",
+    "oxygen-i18n": "^1.4.0",
     "react": "^15.4.2",
+    "react-addons-css-transition-group": "^15.5.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
     "react-router": "^4.0.0",
     "react-router-dom": "^4.0.0",
     "react-router-redux": "^5.0.0-alpha.4",
     "redux": "^3.6.0",
-    "redux-devtools-extension": "^2.13.0"
+    "redux-devtools-extension": "^2.13.0",
+    "redux-thunk": "^2.2.0",
+    "reselect": "^3.0.0"
   }
 }

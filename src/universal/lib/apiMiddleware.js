@@ -26,6 +26,11 @@ export default function apiMiddleware (store) {
             error: false,
             response
           };
+        }).catch(res => {
+          next({ ...rest, res, type: type + '/fail' });
+          return {
+            error: 'unknown'
+          }
         })
       }
     }

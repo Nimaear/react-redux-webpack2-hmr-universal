@@ -14,11 +14,32 @@ export const status = (data) => ({
       return null;
     },
     data,
-    apiMethod: 'status',
+    apiMethod: 'auth',
     method: 'status',
     url: 'auth'
   }
 });
+
+export const login = (data) => ({
+  type: 'auth/login',
+  apiCall: {
+    data,
+    apiMethod: 'auth',
+    method: 'login',
+    url: 'auth'
+  }
+});
+
+export const logout = (data) => ({
+  type: 'auth/logout',
+  apiCall: {
+    data,
+    apiMethod: 'logout',
+    method: 'logout',
+    url: 'auth'
+  }
+});
+
 
 export default createReducer(initialState, {
   ['auth/status']: (state, action) => {
@@ -29,5 +50,24 @@ export default createReducer(initialState, {
       };
     }
     return state;
-  }
+  },
+  ['auth/login']: (state, action) => {
+    if (action.data) {
+      return {
+        ...state,
+        ...action.data
+      };
+    }
+    return state;
+  },
+  ['auth/logout']: (state, action) => {
+    if (action.data) {
+      return {
+        ...state,
+        ...action.data
+      };
+    }
+    return state;
+  },
+
 });

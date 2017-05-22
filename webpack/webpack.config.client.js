@@ -21,7 +21,8 @@ const vendor = [
   'react-dom',
   'react-router',
   'react-redux',
-  'redux'
+  'redux',
+  'cio'
 ];
 
 export default {
@@ -51,7 +52,7 @@ export default {
   },
   plugins: [
     new webpack.NamedModulesPlugin(),
-    new ExtractTextPlugin('[name].css'),
+    new ExtractTextPlugin({filename: '[name].css', allChunks:true}),
     new webpack.NormalModuleReplacementPlugin(/\.\.\/routes\/static/, '../routes/async'),
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor', 'manifest'],
@@ -60,7 +61,7 @@ export default {
     new webpack.optimize.AggressiveMergingPlugin(),
     /* minChunkSize should be 50000 for production apps
      * 10 is for this example */
-    new webpack.optimize.MinChunkSizePlugin({minChunkSize: 10}),
+    new webpack.optimize.MinChunkSizePlugin({minChunkSize: 50000}),
     new webpack.optimize.UglifyJsPlugin({compressor: {warnings: false}, comments: /(?:)/}),
     new AssetsPlugin({path: build, filename: 'assets.json'}),
     new webpack.NoEmitOnErrorsPlugin(),
@@ -96,7 +97,7 @@ export default {
       test: /\.css$/,
       loader: ExtractTextPlugin.extract({
         fallback: 'style-loader',
-        use: 'css-loader'
+        use: 'css-loader',
       })
     }]
   }

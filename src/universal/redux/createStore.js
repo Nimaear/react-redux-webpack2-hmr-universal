@@ -9,12 +9,13 @@ import {
   routerReducer,
   routerMiddleware
 } from 'react-router-redux';
+import thunk from 'redux-thunk';
 
 import apiMiddleware from '../../universal/lib/apiMiddleware';
 import * as Reducers from './reducers/index.js';
 
 export default (history, initialState = {}) => {
-  const middlewares = [ routerMiddleware(history), apiMiddleware];
+  const middlewares = [ routerMiddleware(history), apiMiddleware, thunk];
 
   const store = createStore(combineReducers({
     ...Reducers,

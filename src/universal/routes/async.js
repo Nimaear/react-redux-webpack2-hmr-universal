@@ -1,4 +1,5 @@
 import React from 'react';
+import Loader from 'universal/components/Loader';
 
 function asyncRoute(getComponent) {
   return class AsyncComponent extends React.Component {
@@ -22,10 +23,28 @@ function asyncRoute(getComponent) {
       if ( Component ) {
         return (<Component {...this.props} />);
       }
-      return (<div>loading...</div>); // or <div /> with a loading spinner, etc..
+      return (
+        <Loader />
+      );
     }
   }
 }
+
+const storeRoutes = [
+  {
+    path: '/store/:name/login',
+    component: asyncRoute(() => {
+      return System.import('../modules/store/containers/Login/LoginContainer.js');
+    }),
+  },
+  {
+    path: '/store/:name/:type/:ïd',
+    component: asyncRoute(() => {
+      return System.import('../modules/store/containers/Store/StoreItemContainer.js');
+    }),
+  }
+];
+
 
 export default [
   {
@@ -40,6 +59,6 @@ export default [
     component: asyncRoute(() => {
       return System.import('../modules/store/containers/Store/StoreContainer.js');
     }),
-    // childRoutes: storeRoutes
+    childRoutes: storeRoutes
   },
 ];

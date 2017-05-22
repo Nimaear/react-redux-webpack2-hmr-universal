@@ -5,41 +5,49 @@
     ["transform-object-rest-spread"],
     ["transform-export-extensions"],
     ["add-module-exports"],
-    ["oxygen-i18n", {
-      "statsFile": "build/stats.json",
-      "bundleFile": "build/messages.json"
-    }]
   ],
   "env": {
     "production": {
       "plugins": [
+        ["oxygen-i18n", {
+          "statsFile": "build/stats.json",
+          "bundleFile": "build/messages.json",
+          "generate": false
+        }],
         ["oxygen-css", {
           "vendorPrefixes": true,
-          "prefix": "cs_",
+          "prefix": "cs",
           "compressClassNames": true,
           "bundleFile": "build/bundle.css",
-          "context": "./src/styles/index.js",
+          "context": "./src/universal/styles/index.js",
+          "generate": false,
           "mediaMap": {
             "phone": "media only screen and (max-width: 767px)",
             "tablet": "media only screen and (min-width: 768px) and (max-width: 959px)",
             "desktop": "media only screen and (min-width: 960px)"
-          }
+          },
+          "cacheDir": "tmp/cache/production"
         }]
       ]
     },
     "development": {
       "plugins": [
+        ["oxygen-i18n", {
+          "statsFile": "build/stats.json",
+          "bundleFile": "build/messages.json",
+        }],
         ["oxygen-css", {
           "vendorPrefixes": true,
-          "prefix": "cs_",
-          "compressClassNames": false,
+          "prefix": "cs",
+          "compressClassNames": true,
           "bundleFile": "build/bundle.css",
-          "context": "./src/styles/index.js",
+          "context": "./src/universal/styles/index.js",
           "mediaMap": {
             "phone": "media only screen and (max-width: 767px)",
             "tablet": "media only screen and (min-width: 768px) and (max-width: 959px)",
             "desktop": "media only screen and (min-width: 960px)"
-          }
+          },
+          "cacheDir": "tmp/cache"
         }]
       ]
     }
