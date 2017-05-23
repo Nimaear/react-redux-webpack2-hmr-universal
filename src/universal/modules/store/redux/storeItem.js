@@ -8,16 +8,16 @@ const initialState = {
 export const fetchItem = (data) => ({
   type: 'store/fetchItem',
   apiCall: {
-    // checkCache: (params, state) => {
-    //   if (params.refetch) {
-    //     return null;
-    //   }
-    //   const id = `${params.type}-${params.id}`;
-    //   if (state.entities.storeItem[id] && state.entities.storeItem[id].toc) {
-    //     return state.entities.storeItem[id];
-    //   }
-    //   return null;
-    // },
+    checkCache: (params, state) => {
+      if (params.refetch) {
+        return null;
+      }
+      const id = `${params.type}-${params.id}`;
+      if (state.entities.storeItem[id] && state.entities.storeItem[id].presentation) {
+        return state.entities.storeItem[id];
+      }
+      return null;
+    },
     schema: storeItem,
     data,
     url: 'store',
@@ -30,6 +30,16 @@ export const fetchToc = (data) => ({
   type: 'store/fetchToc',
   courseId: data.courseId,
   apiCall: {
+    checkCache: (params, state) => {
+      if (params.refetch) {
+        return null;
+      }
+      const id = `1-${data.courseId}`;
+      if (state.entities.storeItem[id] && state.entities.storeItem[id].toc) {
+        return { data: state.entities.storeItem[id].toc};
+      }
+      return null;
+    },
     // schema: storeItem,
     data,
     url: 'guest',

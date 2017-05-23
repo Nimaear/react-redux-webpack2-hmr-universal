@@ -19,7 +19,6 @@ class StoreItemContainer extends Component {
   ];
 
   componentDidMount() {
-    console.log('Mount')
     const {
       fetchItemWithToc,
       match,
@@ -67,6 +66,7 @@ const mapStateToProps = (state, props) => {
   const store = getStore(state, name);
   const storeItem = getStoreItem(state, name, type, id);
   return {
+    name,
     theme: store.theme,
     presentation: store.presentation,
     owner: store.owner,

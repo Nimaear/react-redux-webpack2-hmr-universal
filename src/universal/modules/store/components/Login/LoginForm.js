@@ -4,9 +4,10 @@ import classNames from 'classnames';
 import TextField from './TextField';
 import Button from './Button';
 import { translate as _l } from 'oxygen-i18n';
+import StoreBarContainer from 'universal/modules/store/containers/Store/StoreBarContainer';
 
 const css = oxygenCss({
-  root: {
+  form: {
     width: 378,
     margin: 'auto'
   },
@@ -64,7 +65,8 @@ class LoginForm extends Component {
 
   render() {
     const {
-      user
+      user,
+      name,
     } = this.props;
     const {
       email,
@@ -74,6 +76,7 @@ class LoginForm extends Component {
     if (user) {
       return (
         <div>
+          <StoreBarContainer name={name} />
           {_l`You are already logged in.`}
           <button onClick={this.logout}>Log out</button>
         </div>
@@ -81,23 +84,26 @@ class LoginForm extends Component {
     }
     return (
       <div className={css.root}>
-        <div className={css.inputWrapper}>
-          <TextField
-            onChange={email => this.setState({ email })}
-            value={email}
-            placeholder={_l`Email`}
-          />
-        </div>
-        <div className={css.inputWrapper}>
-          <TextField
-            onChange={password => this.setState({ password })}
-            value={password}
-            type={'password'}
-            placeholder={_l`Password`}
-          />
-        </div>
-        <div className={css.inputWrapper}>
-          <Button label={_l`Log in`} disabled={!canLogin} onClick={this.login}/>
+        <StoreBarContainer name={name} />
+        <div className={css.form}>
+          <div className={css.inputWrapper}>
+            <TextField
+              onChange={email => this.setState({ email })}
+              value={email}
+              placeholder={_l`Email`}
+            />
+          </div>
+          <div className={css.inputWrapper}>
+            <TextField
+              onChange={password => this.setState({ password })}
+              value={password}
+              type={'password'}
+              placeholder={_l`Password`}
+            />
+          </div>
+          <div className={css.inputWrapper}>
+            <Button label={_l`Log in`} disabled={!canLogin} onClick={this.login}/>
+          </div>
         </div>
       </div>
     );

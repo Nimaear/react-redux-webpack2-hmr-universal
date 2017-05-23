@@ -8,9 +8,9 @@ import { Route, Switch } from 'react-router';
 
 import { getStore, getStoreItems } from 'universal/selectors/store';
 import LoginContainer from 'universal/modules/store/containers/Login/LoginContainer.js';
+import CheckoutContainer from 'universal/modules/store/containers/Checkout/CheckoutContainer.js';
 import StoreOverviewContainer from 'universal/modules/store/containers/Store/StoreOverviewContainer.js';
 import StoreItemContainer from 'universal/modules/store/containers/Store/StoreItemContainer.js';
-import StoreBar from 'universal/modules/store/components/StoreBar';
 import * as storeActions from 'universal/modules/store/redux/store.js';
 import * as authActions from 'universal/redux/reducers/auth';
 
@@ -55,14 +55,6 @@ class Store extends Component {
   }
 
 
-  clickMenu = () => {
-    this.setState({ menu: !this.state.menu });
-  };
-
-  clickEdit = () => {
-    this.setState({ edit: !this.state.edit });
-  };
-
   componentWillReceiveProps(nextProps) {
     if (this.props.user !== nextProps.user) {
       const {
@@ -89,7 +81,6 @@ class Store extends Component {
       theme,
       name,
       owner,
-      canEditStore,
       user
     } = this.props;
     const {
@@ -98,17 +89,9 @@ class Store extends Component {
     } = this.state;
     return (
       <div>
-        <StoreBar
-          name={name}
-          user={user}
-          theme={theme}
-          canEdit={canEditStore}
-          logo={theme.logoUrl}
-          onClickEdit={this.clickEdit}
-          onClickMenu={this.clickMenu}
-        />
         <Switch>
           <Route path={'/store/:name/login'} component={LoginContainer} />
+          <Route path={'/store/:name/checkout'} component={CheckoutContainer} />
           <Route path={'/store/:name/:type/:id'} render={props => {
             const type = parseInt(props.match.params.type, 10);
             const id = parseInt(props.match.params.id, 10);
@@ -137,7 +120,6 @@ function mapStateToProps(state, props) {
     filter: store.filter,
     user: state.auth.user,
     owner: store.owner,
-    canEditStore: store.canIEdit,
     presentation: store.presentation,
     theme: store.theme,
   };

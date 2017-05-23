@@ -6,6 +6,7 @@ import Cover from 'cio/lib/Cover';
 import { fontSize, hexToRgba, lineHeight, Units, Colors } from 'universal/styles';
 import { currency, translate as _l } from 'oxygen-i18n';
 import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import { withRouter } from 'react-router';
 
 import common from 'universal/styles/common';
 import StoreFooter from 'universal/modules/store/components/Store/StoreFooter';
@@ -16,6 +17,9 @@ import VideoPreview from 'universal/components/VideoPreview';
 import EnrollButton from 'universal/modules/store/components/EnrollButton';
 import TableOfContents from 'universal/modules/store/components/StoreItem/TableOfContents';
 import StoreCard from './Store/StoreCard';
+import StoreBarContainer from 'universal/modules/store/containers/Store/StoreBarContainer';
+import Button from 'universal/components/Button';
+import ChevronLeft from 'cio/lib/Assets/ChevronLeft';
 
 addTranslations({
   ['en-US']: {
@@ -85,6 +89,10 @@ const css = oxygenCss({
     flexWrap: 'wrap',
     justifyContent: 'center',
   },
+  backButton: {
+    lineHeight: '48px',
+    color: Colors.border.active
+  }
 });
 
 class Bundle extends Component {
@@ -96,10 +104,16 @@ class Bundle extends Component {
     storeItem: PropTypes.object
   }
 
+  back = () => {
+    const { match, location, history, name } = this.props;
+    history.push(`/store/${name}`);
+  }
+
   gotoCourse = courseId => {
     const { history, name } = this.props;
     history.push(`/store/${name}/1/${courseId}`);
-  };
+  }
+
 
 
   render () {
@@ -107,9 +121,18 @@ class Bundle extends Component {
       owner,
       theme,
       storeItem,
+      name,
     } = this.props;
     return (
-      <div key={`${storeItem.type}-${storeItem.id}`}>
+      <div>
+        <StoreBarContainer name={name}>
+          <div>
+            <Button className={css.backButton} color={'#FFFFFF'} textColor={'#777'} border={false} onClick={this.back}>
+              <ChevronLeft size={24}/>
+              {_l`Library`}
+            </Button>
+          </div>
+        </StoreBarContainer>
         <div className={css.courseName}>{storeItem.name}</div>
         <div className={storeCss.hero} style={{ backgroundColor: hexToRgba(theme.color, 6) }}>
           <div className={storeCss.whiteBanner} />
@@ -159,4 +182,4 @@ class Bundle extends Component {
   }
 }
 
-export default Bundle;
+export default withRouter(Bundle);

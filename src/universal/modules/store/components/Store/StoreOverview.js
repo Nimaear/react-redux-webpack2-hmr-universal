@@ -11,6 +11,7 @@ import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { fontSize, hexToRgba, Units, Colors } from 'universal/styles';
 import StoreFooter from 'universal/modules/store/components/Store/StoreFooter';
 import RunsOnCoursio from 'universal/components/RunsOnCoursio';
+import StoreBarContainer from 'universal/modules/store/containers/Store/StoreBarContainer';
 
 import OverviewBar from './OverviewBar';
 // import { storeRoutes } from 'universal/routes/static';
@@ -97,7 +98,9 @@ class StoreOverview extends Component {
       theme,
       presentation,
       name,
+      user,
       filter,
+      canEditStore,
       setFilter,
       setSearch,
       search,
@@ -106,6 +109,8 @@ class StoreOverview extends Component {
     const empty = !storeItems || storeItems.length < 1;
     return (
       <div>
+        <StoreBarContainer name={name} />
+
         <div className={storeCss.hero} style={{ backgroundColor: hexToRgba(theme.color, 6) }}>
           <div className={storeCss.whiteBanner} />
           <Cover className={storeCss.cover} size={1920} src={presentation.coverUrl} />

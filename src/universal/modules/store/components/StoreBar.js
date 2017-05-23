@@ -12,8 +12,18 @@ const css = oxygenCss({
   root: {
     height: 156,
     display: 'flex',
+    alignItems: 'flex-start',
+    '&dense': {
+      height: 64,
+      ' logo': {
+        maxHeight: 64 - 8
+      },
+      ' logoContainer': {
+        padding: 4
+      }
+    },
     '@phone': {
-      height: 64
+      height: 64 - 8
     }
   },
   menuIcon: {
@@ -43,12 +53,15 @@ const css = oxygenCss({
     textAlign: 'center',
     padding: 20,
     boxSizing: 'border-box',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    '@phone': {
+      padding: 4
+    },
   },
   logo: {
     maxHeight: 116,
     '@phone': {
-      maxWidth: 64
+      maxHeight: 64 - 8
     }
   },
   loginButton: {
@@ -82,6 +95,11 @@ class StoreBar extends Component {
     history: PropTypes.object,
     theme: PropTypes.object,
     name: PropTypes.string,
+    dense: PropTypes.bool
+  };
+
+  static defaultProps = {
+    dense: false
   };
 
   static contextTypes = {
@@ -100,22 +118,29 @@ class StoreBar extends Component {
 
   render() {
     const {
-      logo,
       user,
       onClickMenu,
       theme,
+      dense,
       canEdit,
+      children,
       onClickEdit
     } = this.props;
+    const classes = classNames(css.root, {
+      [css.dense]: dense
+    })
+    const menuIcon = children || (
+      <div className={css.menuIcon}>
+        {user && <IconButton onClick={onClickMenu}>
+          <MenuIcon />
+        </IconButton>}
+      </div>
+    );
     return (
-      <div className={css.root}>
-        <div className={css.menuIcon}>
-          {user && <IconButton onClick={onClickMenu}>
-            <MenuIcon />
-          </IconButton>}
-        </div>
+      <div className={classes}>
+        {menuIcon}
         <div className={css.logoContainer} onClick={this.gotoStore}>
-          <img className={css.logo} src={logo} />
+          <img className={css.logo} src={theme.logoUrl} />
         </div>
         <div className={css.info}>
           {! user && <div className={css.alreadyEnrolled}>{_l`Already enrolled?`}</div>}

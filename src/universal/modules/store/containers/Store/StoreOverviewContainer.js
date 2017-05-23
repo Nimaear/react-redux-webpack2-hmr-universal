@@ -39,8 +39,10 @@ function mapStateToProps(state, props) {
   const storeItems = getStoreItems(state, name);
   return {
     theme: store.theme,
+    user: state.auth.user,
     search: store.search,
     filter: store.filter,
+    canEditStore: store.canIEdit,
     presentation: store.presentation,
     owner: store.owner,
     storeItems
