@@ -34,6 +34,7 @@ const css = oxygenCss({
     bottom: 0,
   }
 });
+
 class CoverCarousel extends Component {
   static propTypes = {
     height: PropTypes.number,

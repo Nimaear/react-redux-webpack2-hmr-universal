@@ -42,6 +42,7 @@ function mapStateToProps(state, props) {
     user: state.auth.user,
     search: store.search,
     filter: store.filter,
+    editMode: store.editMode,
     canEditStore: store.canIEdit,
     presentation: store.presentation,
     owner: store.owner,
@@ -54,6 +55,7 @@ function mapDispatchToProps(dispatch, props) {
     fetch: bindActionCreators(storeActions.fetch, dispatch),
     setFilter: bindActionCreators(storeActions.setFilter, dispatch),
     setSearch: bindActionCreators(storeActions.setSearch, dispatch),
+    setEditMode: bindActionCreators(storeActions.setEditMode, dispatch),
   };
 }
 

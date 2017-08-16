@@ -24,6 +24,12 @@ export const fetch = (data) => ({
   }
 });
 
+export const setEditMode = (name, editMode) => ({
+  type: 'store/setEditMode',
+  name,
+  editMode
+});
+
 export const setSearch = (name, search) => ({
   type: 'store/setSearch',
   name,
@@ -37,6 +43,16 @@ export const setFilter = (name, itemType) => ({
 });
 
 export default createReducer(initialState, {
+  ['store/setEditMode']:  (state, action) => {
+    const { name, editMode } = action;
+    return {
+      ...state,
+      [name]: {
+        ...state[name],
+        editMode
+      }
+    }
+  },
   ['store/setSearch']:  (state, action) => {
     const { name, search } = action;
     return {

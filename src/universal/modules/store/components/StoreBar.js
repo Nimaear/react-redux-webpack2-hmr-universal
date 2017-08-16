@@ -91,7 +91,7 @@ class StoreBar extends Component {
     onClickEdit: PropTypes.func,
     onClickMenu: PropTypes.func,
     user: PropTypes.object,
-    canEdit: PropTypes.bool,
+    canEditStore: PropTypes.bool,
     history: PropTypes.object,
     theme: PropTypes.object,
     name: PropTypes.string,
@@ -122,7 +122,7 @@ class StoreBar extends Component {
       onClickMenu,
       theme,
       dense,
-      canEdit,
+      canEditStore,
       children,
       onClickEdit
     } = this.props;
@@ -147,7 +147,7 @@ class StoreBar extends Component {
           {!user && <button style={{ color: theme.color }} className={css.loginButton} onClick={this.gotoLogin}>
             Log in
           </button>}
-          {user && canEdit && <IconButton onClick={onClickEdit}>
+          {user && canEditStore && <IconButton onClick={onClickEdit}>
             <PencilIcon />
           </IconButton>}
         </div>

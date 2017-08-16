@@ -8,6 +8,7 @@ import { Route, Switch } from 'react-router';
 
 import { getStore, getStoreItems } from 'universal/selectors/store';
 import LoginContainer from 'universal/modules/store/containers/Login/LoginContainer.js';
+import TermsContainer from 'universal/modules/store/containers/Store/TermsContainer.js';
 import CheckoutContainer from 'universal/modules/store/containers/Checkout/CheckoutContainer.js';
 import StoreOverviewContainer from 'universal/modules/store/containers/Store/StoreOverviewContainer.js';
 import StoreItemContainer from 'universal/modules/store/containers/Store/StoreItemContainer.js';
@@ -90,6 +91,7 @@ class Store extends Component {
     return (
       <div>
         <Switch>
+          <Route path={'/store/:name/terms'} component={TermsContainer} />
           <Route path={'/store/:name/login'} component={LoginContainer} />
           <Route path={'/store/:name/checkout'} component={CheckoutContainer} />
           <Route path={'/store/:name/:type/:id'} render={props => {
@@ -100,10 +102,7 @@ class Store extends Component {
           }}/>
           <Route path={'/store/:name'} component={StoreOverviewContainer} />
         </Switch>
-        <Drawer width={530} overlay open={edit} right onRequestClose={this.clickEdit}>
-          Edit stuff
-        </Drawer>
-        <Drawer overlay open={menu} onRequestClose={this.clickMenu}>
+        <Drawer overlay open={false} onRequestClose={this.clickMenu}>
           <button onClick={this.logout}>Logout</button>
         </Drawer>
       </div>

@@ -8,6 +8,9 @@ export const storeCss = oxygenCss({
     '@phone': {
       width: '100%',
       padding: Units.base,
+    },
+    P: {
+      color: '#626262',
     }
   },
   cover: {

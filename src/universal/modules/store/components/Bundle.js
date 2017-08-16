@@ -148,6 +148,7 @@ class Bundle extends Component {
           <div className={storeCss.header}>{_l`Included courses`}</div>
           <div className={css.cardContainer}>
             {storeItem.courses.map((course, index) => {
+              // console.log(course)
               return (
                 <StoreCard
                   key={index}

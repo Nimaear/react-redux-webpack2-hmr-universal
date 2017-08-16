@@ -6,12 +6,13 @@ import StoreCard from './StoreCard';
 import Cover from 'cio/lib/Cover';
 import { translate as _l } from 'oxygen-i18n';
 import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
-
+import Drawer from 'cio/lib/Drawer';
 
 import { fontSize, hexToRgba, Units, Colors } from 'universal/styles';
 import StoreFooter from 'universal/modules/store/components/Store/StoreFooter';
 import RunsOnCoursio from 'universal/components/RunsOnCoursio';
 import StoreBarContainer from 'universal/modules/store/containers/Store/StoreBarContainer';
+import StoreEditorContainer from 'universal/modules/store/containers/Store/StoreEditorContainer';
 
 import OverviewBar from './OverviewBar';
 // import { storeRoutes } from 'universal/routes/static';
@@ -23,7 +24,8 @@ addTranslations({
   ['en-US']: {
     '{0}': '{0}',
     'Courses': 'Courses',
-    'No results found': 'No results found'
+    'No results found': 'No results found',
+    'Store look and feel': 'Store look and feel'
   }
 })
 
@@ -65,6 +67,12 @@ const css = oxygenCss({
     opacity: 0.01,
     transition: 'opacity 250ms ease-in'
   },
+  toolbar: {
+    height: 96,
+    borderStyle: 'none none solid none',
+    borderWidth: 2,
+    borderColor: '#E6E9E9'
+  }
 });
 
 class StoreOverview extends Component {
@@ -81,16 +89,20 @@ class StoreOverview extends Component {
     setSearch(name, null);
   };
 
-  setSearch = () => {
-    const { name, setSearch } = this.props;
-    setSearch(name, 'mat');
-  };
-
   goto = storeItem => {
     const { history, name } = this.props;
     history.push(`/store/${name}/${storeItem.type}/${storeItem.id}`);
   };
 
+  startEdit = () => {
+    const { name, setEditMode } = this.props;
+    setEditMode(name, true);
+  };
+
+  stopEdit = () => {
+    const { name, setEditMode } = this.props;
+    setEditMode(name, false);
+  };
 
   render () {
     const {
@@ -100,16 +112,17 @@ class StoreOverview extends Component {
       name,
       user,
       filter,
-      canEditStore,
       setFilter,
       setSearch,
       search,
       storeItems,
+      editMode,
+      setEditMode,
     } = this.props;
     const empty = !storeItems || storeItems.length < 1;
     return (
       <div>
-        <StoreBarContainer name={name} />
+        <StoreBarContainer name={name} onClickEdit={this.startEdit}/>
 
         <div className={storeCss.hero} style={{ backgroundColor: hexToRgba(theme.color, 6) }}>
           <div className={storeCss.whiteBanner} />
@@ -158,6 +171,13 @@ class StoreOverview extends Component {
         </div>
         <StoreFooter owner={owner} />
         <RunsOnCoursio />
+        <Drawer width={530} overlay open={editMode} right onRequestClose={this.stopEdit}>
+          <div className={css.toolbar}>
+            <h2>{_l`Store look and feel`}</h2>
+          </div>
+          <StoreEditorContainer name={name} />
+        </Drawer>
+
       </div>
     )
   }

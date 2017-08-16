@@ -38,6 +38,12 @@ const storeRoutes = [
     }),
   },
   {
+    path: '/store/:name/terms',
+    component: asyncRoute(() => {
+      return System.import('../modules/store/containers/Store/TermsContainer.js');
+    }),
+  },
+  {
     path: '/store/:name/checkout',
     component: asyncRoute(() => {
       return System.import('../modules/store/containers/Checkout/CheckoutContainer.js');

@@ -4,12 +4,17 @@ import LoginContainer from 'universal/modules/store/containers/Login/LoginContai
 import CheckoutContainer from 'universal/modules/store/containers/Checkout/CheckoutContainer.js';
 import StoreContainer from 'universal/modules/store/containers/Store/StoreContainer.js';
 import StoreItemContainer from 'universal/modules/store/containers/Store/StoreItemContainer.js';
+import TermsContainer from 'universal/modules/store/containers/Store/TermsContainer.js';
 // import StoreTest from 'universal/modules/store/containers/Store/StoreTest.js';
 
 const storeRoutes = [
   {
     path: '/store/:name/login',
     component: LoginContainer,
+  },
+  {
+    path: '/store/:name/terms',
+    component: TermsContainer,
   },
   {
     path: '/store/:name/checkout',
